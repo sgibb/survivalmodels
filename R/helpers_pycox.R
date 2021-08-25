@@ -707,8 +707,8 @@ predict.pycox <- function(object, newdata, batch_size = 256L, num_workers = 0L,
   }
 
   lg$trace("predict.pycox for: %s", deparse(object$call))
-  lg$trace("x: \n\t%s", paste0(knitr::kable(fit$x, row.names = TRUE), collapse = "\n\t"))
-  lg$trace("y: \n\t%s", paste0(knitr::kable(fit$y), collapse = "\n\t"))
+  lg$trace("x: \n\t%s", capture.output(fit$x, row.names = TRUE), collapse = "\n\t")
+  lg$trace("y: \n\t%s", capture.output(fit$y), collapse = "\n\t")
 
   # clean and convert data to float32
   newdata <- data.frame(clean_test_data(object, newdata))
