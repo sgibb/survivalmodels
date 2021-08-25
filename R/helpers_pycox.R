@@ -772,7 +772,6 @@ predict.pycox <- function(object, newdata, batch_size = 256L, num_workers = 0L,
         if (any(is.nan(surv[, i]))) {
           lg$trace("surv[%i,] has NaNs: %s", i, paste0(as.character(surv[,i]), collapse = ", "))
           x[[i]]$cdf <- rep(1, numeric(length(x[[i]]$cdf))) # nocov - can't force this error
-          browser()
         } else {
           # fix rounding error bug
           x[[i]]$cdf <- sort(round(1 - surv[, i], 6))
