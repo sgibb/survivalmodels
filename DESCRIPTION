@@ -1,7 +1,7 @@
 Package: survivalmodels
 Title: Models for Survival Analysis
 Version: 0.1.8.9000
-Authors@R: 
+Authors@R:
     person(given = "Raphael",
            family = "Sonabend",
            role = c("aut", "cre"),
@@ -12,7 +12,8 @@ License: MIT + file LICENSE
 URL: https://github.com/RaphaelS1/survivalmodels/
 BugReports: https://github.com/RaphaelS1/survivalmodels/issues
 Imports:
-    Rcpp (>= 1.0.5)
+    Rcpp (>= 1.0.5),
+    lgr
 Suggests:
     distr6 (>= 1.4.7),
     keras,
