@@ -706,6 +706,10 @@ predict.pycox <- function(object, newdata, batch_size = 256L, num_workers = 0L,
     stop("Package 'reticulate' required but not installed.") # nocov
   }
 
+  lg$trace("predict.pycox for: %s", deparse(object$call))
+  lg$trace("x: \n\t%s", paste0(knitr::kable(fit$x, row.names = TRUE), collapse = "\n\t"))
+  lg$trace("y: \n\t%s", paste0(knitr::kable(fit$y), collapse = "\n\t"))
+
   # clean and convert data to float32
   newdata <- data.frame(clean_test_data(object, newdata))
 
@@ -760,11 +764,13 @@ predict.pycox <- function(object, newdata, batch_size = 256L, num_workers = 0L,
       }
       ret$surv <- t(surv)
     } else {
+      lg$trace("Cast to distr6")
       # cast to distr6
       x <- rep(list(list(cdf = 0)), nrow(newdata))
       for (i in seq_len(nrow(newdata))) {
         # fix for infinite hazards - invalidate results for NaNs
         if (any(is.nan(surv[, i]))) {
+          lg$trace("surv[%i,] has NaNs: %s", i, paste0(as.character(surv[,i]), collapse = ", "))
           x[[i]]$cdf <- rep(1, numeric(length(x[[i]]$cdf))) # nocov - can't force this error
         } else {
           # fix rounding error bug

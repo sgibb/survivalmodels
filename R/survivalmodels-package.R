@@ -9,3 +9,13 @@ NULL
 #' survivalmodels implements classical and machine learning models for survival analysis that either
 #' do not already exist in R or for more efficient implementations.
 "_PACKAGE"
+
+
+.onLoad <- function(...){
+  assign(
+    "lg",
+    lgr::get_logger(name = "survivalmodels"),
+    envir = parent.env(environment())
+  )
+}
+
