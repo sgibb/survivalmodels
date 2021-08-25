@@ -707,8 +707,12 @@ predict.pycox <- function(object, newdata, batch_size = 256L, num_workers = 0L,
   }
 
   lg$trace("predict.pycox for: %s", deparse(object$call))
-  lg$trace("x: \n\t%s", capture.output(fit$x, row.names = TRUE), collapse = "\n\t")
-  lg$trace("y: \n\t%s", capture.output(fit$y), collapse = "\n\t")
+  lg$trace("x: \n\t%s", capture.output(fit$x))
+  lg$trace("y: \n\t%s", capture.output(fit$y))
+
+  sprintf("predict.pycox for: %s", deparse(object$call))
+  sprintf("x: \n\t%s", capture.output(fit$x))
+  sprintf("y: \n\t%s", capture.output(fit$y))
 
   # clean and convert data to float32
   newdata <- data.frame(clean_test_data(object, newdata))
@@ -771,6 +775,7 @@ predict.pycox <- function(object, newdata, batch_size = 256L, num_workers = 0L,
         # fix for infinite hazards - invalidate results for NaNs
         if (any(is.nan(surv[, i]))) {
           lg$trace("surv[%i,] has NaNs: %s", i, paste0(as.character(surv[,i]), collapse = ", "))
+          sprintf("surv[%i,] has NaNs: %s", i, paste0(as.character(surv[,i]), collapse = ", "))
           x[[i]]$cdf <- rep(1, numeric(length(x[[i]]$cdf))) # nocov - can't force this error
         } else {
           # fix rounding error bug
