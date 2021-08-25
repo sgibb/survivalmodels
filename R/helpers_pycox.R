@@ -707,12 +707,14 @@ predict.pycox <- function(object, newdata, batch_size = 256L, num_workers = 0L,
   }
 
   lg$trace("predict.pycox for: %s", deparse(object$call))
-  lg$trace("x: \n\t%s", capture.output(object$x))
-  lg$trace("y: \n\t%s", capture.output(object$y))
+  lg$trace("x: \n\t%s", paste0(capture.output(object$x), collapse = "\n\t"))
+  lg$trace("y: \n\t%s", paste0(capture.output(object$y), collapse = "\n\t"))
+  lg$trace("newdata: \n\t%s", paste0(capture.output(newdata), collapse = "\n\t"))
 
   sprintf("predict.pycox for: %s", deparse(object$call))
-  sprintf("x: \n\t%s", capture.output(object$x))
-  sprintf("y: \n\t%s", capture.output(object$y))
+  sprintf("x: \n\t%s", paste0(capture.output(object$x), collapse = "\n\t"))
+  sprintf("y: \n\t%s", paste0(capture.output(object$y), collapse = "\n\t"))
+  sprintf("newdata: \n\t%s", paste0(capture.output(newdata), collapse = "\n\t"))
 
   # clean and convert data to float32
   newdata <- data.frame(clean_test_data(object, newdata))
