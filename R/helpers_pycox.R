@@ -707,14 +707,10 @@ predict.pycox <- function(object, newdata, batch_size = 256L, num_workers = 0L,
   }
 
   lg$trace("predict.pycox for: %s", deparse(object$call))
+  lg$trace("predict.pycox call: %s", deparse(match.call()))
   lg$trace("x: \n\t%s", paste0(capture.output(object$x), collapse = "\n\t"))
   lg$trace("y: \n\t%s", paste0(capture.output(object$y), collapse = "\n\t"))
-  lg$trace("newdata: \n\t%s", paste0(capture.output(newdata), collapse = "\n\t"))
-
-  sprintf("predict.pycox for: %s", deparse(object$call))
-  sprintf("x: \n\t%s", paste0(capture.output(object$x), collapse = "\n\t"))
-  sprintf("y: \n\t%s", paste0(capture.output(object$y), collapse = "\n\t"))
-  sprintf("newdata: \n\t%s", paste0(capture.output(newdata), collapse = "\n\t"))
+  lg$trace("newdata: \n\t%s", paste0(capture.output(as.data.frame(newdata)), collapse = "\n\t"))
 
   # clean and convert data to float32
   newdata <- data.frame(clean_test_data(object, newdata))
@@ -777,8 +773,7 @@ predict.pycox <- function(object, newdata, batch_size = 256L, num_workers = 0L,
         # fix for infinite hazards - invalidate results for NaNs
         if (any(is.nan(surv[, i]))) {
           lg$trace("surv[%i,] has NaNs: %s", i, paste0(as.character(surv[,i]), collapse = ", "))
-          sprintf("surv[%i,] has NaNs: %s", i, paste0(as.character(surv[,i]), collapse = ", "))
-          x[[i]]$cdf <- rep(1, numeric(length(x[[i]]$cdf))) # nocov - can't force this error
+          x[[i]]$cdf <- rep(1, ncol(surv)) # nocov - can't force this error
         } else {
           # fix rounding error bug
           x[[i]]$cdf <- sort(round(1 - surv[, i], 6))
