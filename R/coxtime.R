@@ -56,6 +56,8 @@ coxtime <- function(formula = NULL, data = NULL, reverse = FALSE,
 
   call <- match.call()
 
+  lg$trace("coxtime call: %s", deparse(call))
+
   data <- .pycox_prep(formula = formula, data = data, time_variable = time_variable,
                       status_variable = status_variable, x = x, y = y, reverse = reverse,
                       activation = activation, frac = frac, standardize_time = standardize_time,

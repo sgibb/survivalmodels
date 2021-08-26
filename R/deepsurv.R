@@ -44,6 +44,8 @@ deepsurv <- function(formula = NULL, data = NULL, reverse = FALSE,
 
   call <- match.call()
 
+  lg$trace("deepsurv call: %s", deparse(call))
+
   data <- .pycox_prep(formula, data, time_variable, status_variable, x, y, reverse, activation,
                      frac)
 
