@@ -708,9 +708,9 @@ predict.pycox <- function(object, newdata, batch_size = 256L, num_workers = 0L,
 
   lg$trace("predict.pycox for: %s", deparse(object$call))
   lg$trace("predict.pycox call: %s", deparse(match.call()))
-  lg$info("x: \n\t%s", dput(object$x))
-  lg$info("y: \n\t%s", dput(object$y))
-  lg$info("newdata: \n\t%s", dput(as.data.frame(newdata)))
+  lg$info("x: \n\t%s", deparse(dput(object$x)))
+  lg$info("y: \n\t%s", deparse(dput(object$y)))
+  lg$info("newdata: \n\t%s", deparse(dput(as.data.frame(newdata))))
   lg$debug("x: \n\t%s", paste0(capture.output(object$x), collapse = "\n\t"))
   lg$debug("y: \n\t%s", paste0(capture.output(object$y), collapse = "\n\t"))
   lg$debug("newdata: \n\t%s", paste0(capture.output(as.data.frame(newdata)), collapse = "\n\t"))
