@@ -44,9 +44,10 @@ deepsurv <- function(formula = NULL, data = NULL, reverse = FALSE,
 
   call <- match.call()
 
-  if (missing(learning_rate))
+  dots <- list(...)
+  if (is.null(dots$learning_rate))
       learning_rate <- 0.5
-  if (missing(weight_decay))
+  if (is.null(dots$weight_decay))
       weight_decay <- 0.25
 
   lg$trace("deepsurv call: %s", deparse(call))
