@@ -767,6 +767,7 @@ predict.pycox <- function(object, newdata, batch_size = 256L, num_workers = 0L,
       ret$surv <- t(surv)
     } else {
       lg$trace("Cast to distr6")
+      lg$trace("surv", paste0(capture.output(surv), collapse = "\n\t"))
       # cast to distr6
       x <- rep(list(list(cdf = 0)), nrow(newdata))
       for (i in seq_len(nrow(newdata))) {
