@@ -56,7 +56,14 @@ coxtime <- function(formula = NULL, data = NULL, reverse = FALSE,
 
   call <- match.call()
 
+  if (missing(learning_rate))
+      learning_rate <- 0.5
+  if (missing(weight_decay))
+      weight_decay <- 0.25
+
   lg$trace("coxtime call: %s", deparse(call))
+  lg$trace("defaults:\n\tfrac: %d\n\tearly_stopping: %d\n\t epochs: %d\n\toptimizer: %s", frac, as.numeric(early_stopping), epochs, optimizer)
+  lg$trace("param_set:\n\tdropout: %d\n\tweight_decay: %d\n\tlearning_rate: %d\n\tnum_nodes: %s", dropout, weight_decay, learning_rate, paste0(num_nodes, collapse = ","))
 
   data <- .pycox_prep(formula = formula, data = data, time_variable = time_variable,
                       status_variable = status_variable, x = x, y = y, reverse = reverse,
